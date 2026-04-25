@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: wallet-managment
+
+jwt:
+  secret: "my_secret_key"
+  expiration: 86400000               # 24h
+
+app: 
+  i18n:
+    modules:
+      - auth
+      - user
+      - validation
+      - general
+    supported-langs:
+      - en
+      - ar
+    default-lang: en
