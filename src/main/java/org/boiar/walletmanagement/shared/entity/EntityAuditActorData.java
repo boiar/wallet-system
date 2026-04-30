@@ -1,6 +1,5 @@
 package org.boiar.walletmanagement.shared.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
@@ -15,11 +14,11 @@ import org.springframework.data.annotation.LastModifiedBy;
 @Builder
 public class EntityAuditActorData {
 
-    @CreatedBy
-    @Column(name = "created_by", updatable = false)
-    private String createdBy;
+  @CreatedBy
+  @Column(name = "created_by", updatable = false)
+  private String createdBy;
 
-    @LastModifiedBy
-    @Column(name = "last_modified_by")
-    private String lastModifiedBy;
+  @LastModifiedBy
+  @Column(name = "last_modified_by")
+  private String lastModifiedBy;
 }

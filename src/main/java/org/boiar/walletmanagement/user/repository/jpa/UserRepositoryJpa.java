@@ -1,15 +1,18 @@
 package org.boiar.walletmanagement.user.repository.jpa;
 
+import java.util.Optional;
+import java.util.UUID;
 import org.boiar.walletmanagement.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-import java.util.UUID;
-
 public interface UserRepositoryJpa extends JpaRepository<User, UUID> {
-    boolean existsByEmailIgnoreCase(String email);
+  boolean existsByEmailIgnoreCase(String email);
 
-    boolean existsByPhoneNumber(String phoneNumber);
+  boolean existsByPhone(String phoneNumber);
 
-    Optional<User> findByEmailIgnoreCase(String email);
+  boolean existsByEmail(String email);
+
+  Optional<User> findByEmailIgnoreCase(String email);
+
+  Optional<User> findByEmail(String email);
 }

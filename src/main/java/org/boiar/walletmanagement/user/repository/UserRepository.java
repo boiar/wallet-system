@@ -1,18 +1,21 @@
 package org.boiar.walletmanagement.user.repository;
 
-import org.boiar.walletmanagement.user.entity.User;
-
 import java.util.Optional;
 import java.util.UUID;
+import org.boiar.walletmanagement.user.entity.User;
 
 public interface UserRepository {
-    boolean existsByEmailIgnoreCase(String email);
+  boolean existsByEmailIgnoreCase(String email);
 
-    boolean existsByPhoneNumber(String phoneNumber);
+  boolean existsByPhone(String phoneNumber);
 
-    Optional<User> findByEmailIgnoreCase(String email);
+  boolean existsByEmail(String email);
 
-    Optional<User> findById(UUID userId);
+  Optional<User> findByEmailIgnoreCase(String email);
 
-    void save(User userObj);
+  Optional<User> findByEmail(String email);
+
+  Optional<User> findById(UUID userId);
+
+  void save(User userObj);
 }

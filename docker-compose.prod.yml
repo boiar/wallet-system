@@ -1,0 +1,31 @@
+services:
+
+  app:
+    image: wallet-management:latest   # use pre-built image in prod
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      JAVA_OPTS: >
+        -XX:+UseContainerSupport
+        -XX:MaxRAMPercentage=75.0
+        -Xss512k
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          memory: 256M
+    restart: always
+
+  postgres:
+    ports: []
+    restart: always
+
+  redis:
+    ports: []
+    restart: always
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+    restart: always
