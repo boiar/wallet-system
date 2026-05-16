@@ -7,6 +7,7 @@ import org.boiar.walletmanagement.auth.entity.Otp;
 import org.boiar.walletmanagement.auth.enums.OtpTypeEnum;
 import org.boiar.walletmanagement.auth.exception.AuthErrorCode;
 import org.boiar.walletmanagement.auth.exception.AuthException;
+import org.boiar.walletmanagement.auth.factory.OtpNotificationStrategyFactory;
 import org.boiar.walletmanagement.auth.mapper.OtpMapper;
 import org.boiar.walletmanagement.auth.repository.OtpRepository;
 import org.boiar.walletmanagement.auth.requests.*;
@@ -29,7 +30,7 @@ public class OtpServiceImpl implements OtpService {
   private final LocaleHelper localeHelper;
   private final UserMapper userMapper;
   private final OtpMapper otpMapper;
-  private final EmailNotificationService emailNotificationService;
+  private final OtpNotificationStrategyFactory otpNotificationStrategyFactory;
 
   @Value("${app.otp.expiration-minutes:5}")
   private int otpExpirationMinutes;
@@ -79,11 +80,7 @@ public class OtpServiceImpl implements OtpService {
 
     otpRepo.deleteAllByUserEmailAndType(request.email(), request.type());
 
-    String code = generateOtpCode();
-    Otp otpObj = otpMapper.toOtpEntity(user, code, request.type(), otpExpirationMinutes);
-
-    otpRepo.save(otpObj);
-    emailNotificationService.resendOtp(user.getEmail(), user.getFullName(), code, defaultLang);
+    this.sendOtp(user, request.type());
   }
 
   public void sendOtp(User user, OtpTypeEnum type) {
@@ -92,7 +89,9 @@ public class OtpServiceImpl implements OtpService {
     Otp otpObj = otpMapper.toOtpEntity(user, code, type, otpExpirationMinutes);
 
     otpRepo.save(otpObj);
-    emailNotificationService.sendOtpRegister(user.getEmail(), user.getFullName(), code, defaultLang);
+
+    // use strategy based on otp type
+    otpNotificationStrategyFactory.getStrategy(type).send(user, code, defaultLang);
   }
 
   private String generateOtpCode() {

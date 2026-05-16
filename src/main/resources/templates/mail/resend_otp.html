@@ -1,5 +1,5 @@
 <p style="margin:0 0 24px;color:#374151;font-size:16px;line-height:1.6;"
-   th:text="#{email.verification.greeting(${username})}">
+   th:text="#{email.greeting(${username})}">
 </p>
 
 <p style="margin:0 0 32px;color:#374151;font-size:16px;line-height:1.6;"
@@ -12,7 +12,7 @@
             style="background:#f0f7ff;border:2px dashed #0f4c81;border-radius:12px;padding:32px;">
 
             <div style="color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;"
-                 th:text="#{email.verification.otp.label}">
+                 th:text="#{email.otp.label}">
             </div>
 
             <div style="color:#1a2e4a;font-size:48px;font-weight:800;letter-spacing:16px;line-height:1;"
@@ -20,7 +20,7 @@
             </div>
 
             <div style="margin-top:16px;color:#9ca3af;font-size:13px;"
-                 th:text="#{email.verification.expiry(${expiry})}">
+                 th:text="#{email.otp.expiry(${expiry})}">
             </div>
 
         </td>
