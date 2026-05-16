@@ -1,4 +1,4 @@
-package org.boiar.walletmanagement.core.security;
+package org.boiar.walletmanagement.core.filter;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;

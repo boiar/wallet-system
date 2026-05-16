@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|Welcome to ${appName}|">Welcome</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Helvetica,Arial,sans-serif;">
+
+<!-- Preheader (hidden preview text) -->
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;"
+     th:text="|Welcome aboard, ${name}! Your wallet is ready.|">
+</div>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0f4f8;">
+    <tr>
+        <td align="center" style="padding:40px 16px;">
+
+            <!-- Card -->
+            <table width="600" cellpadding="0" cellspacing="0" border="0"
+                   style="background:#ffffff;border-radius:16px;overflow:hidden;
+                      box-shadow:0 4px 24px rgba(0,0,0,0.08);max-width:600px;width:100%;">
+
+                <!-- Header -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#1a2e4a 0%,#0f4c81 100%);padding:48px 48px 40px;text-align:center;">
+                        <div style="display:inline-block;background:rgba(255,255,255,0.12);
+                          border-radius:50%;width:72px;height:72px;line-height:72px;
+                          font-size:32px;margin-bottom:20px;">💼</div>
+                        <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:700;letter-spacing:-0.5px;"
+                            th:text="|Welcome to ${appName}|">
+                            Welcome
+                        </h1>
+                        <p style="margin:12px 0 0;color:rgba(255,255,255,0.75);font-size:15px;"
+                           th:text="#{email.welcome.subheader}">
+                            Your smart wallet is all set
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding:48px;">
+
+                        <p style="margin:0 0 24px;color:#374151;font-size:16px;line-height:1.6;">
+                            <span th:text="#{email.general.greeting}">Hi</span> <strong th:text="${name}">User</strong>,
+                        </p>
+                        <p style="margin:0 0 24px;color:#374151;font-size:16px;line-height:1.6;"
+                           th:text="|We're thrilled to have you on board. Your ${appName} account is now active and ready to use. Manage your finances all in one place.|">
+                            We're thrilled to have you on board. Your account is now active.
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background:#f8fafc;padding:28px 48px;border-top:1px solid #e5e7eb;text-align:center;">
+                        <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;"
+                           th:text="|You received this email because you created an account on ${appName}.|">
+                            You received this email because you created an account.
+                        </p>
+                        <p style="margin:12px 0 0;color:#d1d5db;font-size:11px;"
+                           th:text="|© ${year} ${appName}. All rights reserved.|">
+                            © 2024 Wallet Management. All rights reserved.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

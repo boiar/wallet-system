@@ -20,6 +20,7 @@ CREATE TABLE users
     -- Audit (EntityAuditTimingData @Embedded)
     created_date        TIMESTAMP       NOT NULL DEFAULT NOW(),
     updated_date        TIMESTAMP       NOT NULL DEFAULT NOW(),
+    deleted_date        TIMESTAMP       NULL,
 
     -- Constraints
     CONSTRAINT pk_users PRIMARY KEY (id),

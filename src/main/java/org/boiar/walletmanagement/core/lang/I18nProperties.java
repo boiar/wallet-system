@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "app.i18n")
 public class I18nProperties {
-  private List<String> modules = List.of("general", "validation");
-  private List<String> supportedLangs = List.of("en");
-  private String defaultLang = "en";
+
+  private String basePath = "classpath:messages/";
+  private List<String> modules;
+  private List<String> supportedLangs;
+  private String defaultLang;
+  private int cacheSeconds = 0;
 }

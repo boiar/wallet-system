@@ -15,9 +15,9 @@ public class OtpRepositoryImpl implements OtpRepository {
   private final OtpRepositoryJpa otpRepositoryJpa;
 
   @Override
-  public Optional<Otp> findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedAtDesc(
+  public Optional<Otp> findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedDateDesc(
       String email, OtpTypeEnum type) {
-    return otpRepositoryJpa.findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedAtDesc(email, type);
+    return otpRepositoryJpa.findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedDateDesc(email, type);
   }
 
   @Override

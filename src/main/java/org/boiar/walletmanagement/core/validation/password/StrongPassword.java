@@ -4,6 +4,13 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
+/*
+* Validates that password is strong not weak.
+*
+* */
+
+
+
 @Documented
 @Constraint(validatedBy = StrongPasswordValidator.class)
 @Target({ElementType.FIELD})

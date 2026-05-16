@@ -1,0 +1,2 @@
+ALTER TABLE otps
+DROP CONSTRAINT IF EXISTS chk_otps_type;

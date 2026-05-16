@@ -1,4 +1,4 @@
-package org.boiar.walletmanagement.core;
+package org.boiar.walletmanagement.core.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

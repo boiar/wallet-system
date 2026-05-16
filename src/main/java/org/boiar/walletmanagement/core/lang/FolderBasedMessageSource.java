@@ -9,6 +9,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -53,18 +54,25 @@ public class FolderBasedMessageSource implements MessageSource {
 
     String[] basenames =
         i18nProperties.getModules().stream()
-            .map(module -> "classpath:messages/" + resolvedLang + "/" + module)
+            .map(module -> i18nProperties.getBasePath() + resolvedLang + "/" + module)
             .toArray(String[]::new);
 
     source.setBasenames(basenames);
     source.setDefaultEncoding("UTF-8");
-    source.setCacheSeconds(3600);
+    source.setCacheSeconds(i18nProperties.getCacheSeconds());
     source.setFallbackToSystemLocale(false);
     return source;
   }
 
   private boolean folderExists(String lang) {
-    Resource resource = new ClassPathResource("messages/" + lang + "/");
-    return resource.exists();
+    String path = i18nProperties.getBasePath() + lang + "/";
+    try {
+      Resource resource = path.startsWith("classpath")
+              ? new ClassPathResource(path.replace("classpath:", ""))
+              : new FileSystemResource(path.replace("file:", ""));
+      return resource.exists();
+    } catch (Exception e) {
+      return false;
+    }
   }
 }

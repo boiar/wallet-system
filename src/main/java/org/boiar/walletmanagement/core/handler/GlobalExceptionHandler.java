@@ -58,15 +58,18 @@ public class GlobalExceptionHandler {
   // 500 fallback
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponse> handleGeneral(Exception ex, HttpServletRequest request) {
+    log.error("Unhandled exception at [{}] {}: {}",
+            request.getMethod(), request.getRequestURI(), ex.getMessage(), ex); // ← add this line
+
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(
-            ErrorResponse.builder()
-                .code("ERR_INTERNAL")
-                .message(localeHelper.get("error.internal"))
-                .status(500)
-                .path(request.getRequestURI())
-                .timestamp(Instant.now())
-                .build());
+            .body(
+                ErrorResponse.builder()
+                        .code("ERR_INTERNAL")
+                        .message(localeHelper.get("error.internal"))
+                        .status(500)
+                        .path(request.getRequestURI())
+                        .timestamp(Instant.now())
+                        .build());
   }
 
   private String resolveFieldMessage(org.springframework.validation.FieldError fe) {

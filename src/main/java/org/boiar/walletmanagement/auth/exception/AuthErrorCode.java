@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 public enum AuthErrorCode implements ErrorCode {
   INVALID_CREDENTIALS("ERR_INVALID_CREDENTIALS", "error.invalid.credentials", UNAUTHORIZED),
   ACCOUNT_NOT_VERIFIED("ERR_ACCOUNT_NOT_VERIFIED", "error.account.not.verified", FORBIDDEN),
+  ACCOUNT_ALREADY_VERIFIED("ERR_ACCOUNT_NOT_VERIFIED", "error.account.already.verified", FORBIDDEN),
   ACCOUNT_DISABLED("ERR_ACCOUNT_DISABLED", "error.account.disabled", FORBIDDEN),
   OTP_NOT_FOUND("ERR_OTP_NOT_FOUND", "error.otp.not.found", NOT_FOUND),
   OTP_EXPIRED("ERR_OTP_EXPIRED", "error.otp.expired", BAD_REQUEST),

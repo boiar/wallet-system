@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@Builder
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -65,6 +65,7 @@ public class User implements UserDetails {
     return this.email;
   }
 
+
   @Override
   public boolean isEnabled() {
     return this.enabled;
@@ -74,14 +75,21 @@ public class User implements UserDetails {
     return this.emailVerified;
   }
 
+
+  public String getFullName() {
+    return this.firstName + " " + this.lastName;
+  }
+
   @PrePersist
   public void prePersist() {
+    if (timingData == null) timingData = new EntityAuditTimingData();
     timingData.setCreatedDate(LocalDateTime.now());
     timingData.setUpdatedDate(LocalDateTime.now());
   }
 
   @PreUpdate
   public void preUpdate() {
+    if (timingData == null) timingData = new EntityAuditTimingData();
     timingData.setUpdatedDate(LocalDateTime.now());
   }
 }

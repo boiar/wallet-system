@@ -5,12 +5,16 @@ import jakarta.validation.Valid;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.boiar.walletmanagement.core.lang.LocaleHelper;
+import org.boiar.walletmanagement.core.response.ApiResponse;
+import org.boiar.walletmanagement.core.security.annotation.CurrentUser;
 import org.boiar.walletmanagement.user.entity.User;
 import org.boiar.walletmanagement.user.request.ChangePasswordRequest;
 import org.boiar.walletmanagement.user.request.ProfileUpdateRequest;
 import org.boiar.walletmanagement.user.response.UserProfileResponse;
 import org.boiar.walletmanagement.user.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,47 +25,67 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
   private final UserService userService;
+  private final LocaleHelper localeHelper;
 
   @GetMapping("/profile")
   @ResponseStatus(code = HttpStatus.OK)
-  public UserProfileResponse getProfile(final Authentication principal) {
-    return this.userService.getUserById(getUserId(principal));
+  public ResponseEntity<ApiResponse<UserProfileResponse>> getProfile(@CurrentUser User user) {
+    UserProfileResponse response =  this.userService.getUserById(user.getId());
+
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.fetched.successfully"), response));
   }
 
   @PatchMapping("update-profile")
   @ResponseStatus(code = HttpStatus.OK)
-  public void updateProfile(
-      @RequestBody @Valid final ProfileUpdateRequest request, final Authentication principal) {
+  public ResponseEntity<ApiResponse<Object>> updateProfile(
+      @RequestBody
+      @Valid final ProfileUpdateRequest request,
+      @CurrentUser User user ) {
 
-    this.userService.updateProfileInfo(request, getUserId(principal));
+    this.userService.updateProfileInfo(request, user.getId());
+
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.updated.successfully")));
   }
 
   @PostMapping("update-password")
   @ResponseStatus(code = HttpStatus.OK)
-  public void changePassword(
-      @RequestBody @Valid final ChangePasswordRequest request, final Authentication principal) {
-    this.userService.changePassword(request, getUserId(principal));
+  public ResponseEntity<ApiResponse<Object>> changePassword(
+      @RequestBody
+      @Valid
+      final ChangePasswordRequest request,
+      @CurrentUser User user) {
+
+    this.userService.changePassword(request, user.getId());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.updated.successfully")));
   }
 
   @PatchMapping("profile/deactivate")
   @ResponseStatus(code = HttpStatus.OK)
-  public void deactivateAccount(final Authentication principal) {
-    this.userService.deactivateAccount(getUserId(principal));
+  public ResponseEntity<ApiResponse<Object>> deactivateAccount(@CurrentUser User user) {
+    this.userService.deactivateAccount(user.getId());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.updated.successfully")));
   }
 
   @PatchMapping("/profile/reactivate")
   @ResponseStatus(code = HttpStatus.OK)
-  public void reactivateAccount(final Authentication principal) {
-    this.userService.reactivateAccount(getUserId(principal));
+  public ResponseEntity<ApiResponse<Object>> reactivateAccount(@CurrentUser User user) {
+
+    this.userService.reactivateAccount(user.getId());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.updated.successfully")));
   }
 
   @DeleteMapping("/delete")
   @ResponseStatus(code = HttpStatus.OK)
-  public void deleteAccount(final Authentication principal) {
-    this.userService.deleteAccount(getUserId(principal));
+  public ResponseEntity<ApiResponse<Object>> deleteAccount(@CurrentUser User user) {
+
+    this.userService.deleteAccount(user.getId());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(ApiResponse.success(localeHelper.get("general.deleted.successfully")));
   }
 
-  private UUID getUserId(final Authentication authentication) {
-    return ((User) Objects.requireNonNull(authentication.getPrincipal())).getId();
-  }
 }

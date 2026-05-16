@@ -1,0 +1,18 @@
+# DEV ONLY — image just runs the jar from mounted ./target
+# No build stage needed; Maven runs locally on your machine
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# wget for health check
+RUN apk add --no-cache wget
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD wget -qO- http://localhost:8080/actuator/health || exit 1
+
+# DevTools flag enabled — Spring will auto-restart when it detects jar change
+ENTRYPOINT ["java"]
+CMD ["-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.devtools.restart.enabled=true", "-Dspring.devtools.livereload.enabled=true", "-jar", "/app/target/app.jar"]

@@ -1,0 +1,90 @@
+.<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|Low Balance Alert – ${appName}|">Low Balance Alert – WalletApp</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f4f8;font-family:'Segoe UI',Helvetica,Arial,sans-serif;">
+
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;"
+     th:text="|Your ${appName} balance is low: ${balance} ${currency}. Top up to keep transacting.|">
+</div>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0f4f8;">
+    <tr>
+        <td align="center" style="padding:40px 16px;">
+
+            <table width="600" cellpadding="0" cellspacing="0" border="0"
+                   style="background:#ffffff;border-radius:16px;overflow:hidden;
+                      box-shadow:0 4px 24px rgba(0,0,0,0.08);max-width:600px;width:100%;">
+
+                <!-- Header – amber/warning tone -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#92400e 0%,#d97706 100%);
+                       padding:40px 48px;text-align:center;">
+                        <div style="font-size:40px;margin-bottom:12px;">⚠️</div>
+                        <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;"
+                            th:text="#{email.low_balance.header}">
+                            Low Balance Alert
+                        </h1>
+                        <p style="margin:8px 0 0;color:rgba(255,255,255,0.8);font-size:14px;"
+                           th:text="#{email.low_balance.subheader}">
+                            Your wallet balance is running low
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding:48px;">
+                        <p style="margin:0 0 24px;color:#374151;font-size:16px;line-height:1.6;">
+                            <span th:text="#{email.general.greeting}">Hi</span> <strong th:text="${name}">User</strong>,
+                        </p>
+                        <p style="margin:0 0 32px;color:#374151;font-size:16px;line-height:1.6;"
+                           th:text="|Your ${appName} wallet balance has dropped below the threshold of ${thresholdAmount} ${currency}. Your current balance is:|">
+                            Your WalletApp wallet balance has dropped below the threshold. Your current balance is:
+                        </p>
+
+                        <!-- Balance display -->
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:32px;">
+                            <tr>
+                                <td align="center"
+                                    style="background:#fff7ed;border:2px solid #f97316;
+                             border-radius:12px;padding:28px;">
+                                    <div style="color:#9a3412;font-size:13px;font-weight:600;
+                                text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;"
+                                         th:text="#{email.low_balance.current_label}">
+                                        Current Balance
+                                    </div>
+                                    <div style="font-size:48px;font-weight:800;color:#92400e;line-height:1;">
+                                        <span th:text="${balance}">0.00</span>
+                                        <span style="font-size:22px;color:#b45309;" th:text="${currency}">USD</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background:#f8fafc;padding:28px 48px;border-top:1px solid #e5e7eb;text-align:center;">
+                        <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;"
+                           th:text="#{email.low_balance.footer}">
+                            You're receiving this because low-balance alerts are enabled for your account.<br/>
+                        </p>
+                        <p style="margin:10px 0 0;color:#d1d5db;font-size:11px;"
+                           th:text="|© ${year} ${appName}. All rights reserved.|">
+                            © 2024 Wallet Management. All rights reserved.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

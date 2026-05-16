@@ -24,6 +24,7 @@ import org.boiar.walletmanagement.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
   private Long expTime;
 
   @Override
+  @Transactional
   public void register(RegisterRequest request) {
     if (userRepo.existsByEmail(request.email()))
       throw new AuthException(AuthErrorCode.EMAIL_ALREADY_EXISTS);
@@ -79,6 +81,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
+  @Transactional
   public void forgetPassword(ForgetPasswordRequest request) {
     User user = userRepo.findByEmail(request.email()).orElse(null);
 
@@ -91,6 +94,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
+  @Transactional
   public void resetPassword(ResetPasswordRequest request) {
     User user =
         userRepo
@@ -99,7 +103,7 @@ public class AuthServiceImpl implements AuthService {
 
     Otp otp =
         otpRepo
-            .findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedAtDesc(
+            .findTopByUserEmailAndTypeAndUsedFalseOrderByCreatedDateDesc(
                 request.email(), OtpTypeEnum.FORGET_PASSWORD)
             .orElseThrow(() -> new AuthException(AuthErrorCode.OTP_INVALID));
 
